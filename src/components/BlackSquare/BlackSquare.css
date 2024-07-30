@@ -1,0 +1,10 @@
+
+/* BlackSquare.css*/
+
+.black-square {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(255, 222, 89); /* Change this color or add additional styles as needed */
+    z-index: 0;
+}

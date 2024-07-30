@@ -1,0 +1,93 @@
+now need to make archer fire from far away, 
+and make enemy AI do it too... 
+
+thats going to be hard.
+
+need to hook keys awsd
+
+maybe to fix the error, just detect it as 100%, and add message regenerated.
+
+would be nice also to rotate the units when we attack. though that might cause even more bugs.
+
+-
+
+
+now it seems i cant attack and retreat. it becomes out of moves after one attack?
+thats how conw does.
+
+do you want to make the ranged attack? or we leave it as is?
+
+-
+
+There is still the issue of AI overlapping units.
+And with AI moving my units sometimes.
+
+should make skip turn mechanic.
+should also account for units that AI tried to move.
+
+---
+
+
+now the Piece will move towards the closest enemy,
+Later i should also take into account the combat utility (the defense and the attack of each unit).
+To decide the best AI move.
+
+make it also skip turn sometimes.
+
+need a function for AI get units in danger.
+
+there was a bug where the unit killed my unit but then it ressurrected so weird.
+
+---
+
+fix terrain bonuses.
+make an utility ai, check all enemy units, check all human units, analyze the ones i have bonus against and then check distance and make
+the distance have an influence on the value.
+
+--
+
+create text message that spawns in a x and a y and disappears.
+
+if that works we might do that to render stars of experience.
+
+then do the combat perfectly.
+
+then do the turns, and AI
+
+keep the black squares, maybe for an effect make another component called, terrain, and mimick everything using the images code.
+
+-
+
+avoid terrain repetition.
+make the combat work properly.
+and the turns and ai.
+and a new component for the xp.
+
+the combat is done.
+though when we move a piece, we should now disable its movement.
+could also make it so that it shows the spots where it can move, thats in the tuts. 
+But its not relevant yet.
+
+the piece needs the moves or at least if it already moved this turn.
+
+---
+
+now need to make it have a hue maybe. for the other faction.
+and then need to make the combat work properly.
+and the ai that simply advances at random.
+would be nice to also have the damage numbers.
+though im afraid that might cause some issues.
+then we need a way to combine both the candy crush and this one.
+maybe have them as separate apps communicating with each other.
+
+-
+
+
+maybe try to find a way to instead of dragging we just select, and spawn a selection effect on top of the selected pawn.
+that way the pawn doesnt move with it i think.
+
+https://www.youtube.com/watch?v=sX0HM52iH8o&list=PLBmRxydnERkysOgOS917Ojc_-uisgb8Aj&index=7
+
+https://www.youtube.com/watch?v=JzCKJOCR3PI&list=PLBmRxydnERkysOgOS917Ojc_-uisgb8Aj&index=5
+
+https://www.youtube.com/watch?v=HKMcqyfRQoE&list=PLBmRxydnERkysOgOS917Ojc_-uisgb8Aj&index=2

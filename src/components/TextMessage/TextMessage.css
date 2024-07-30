@@ -1,0 +1,23 @@
+@keyframes moveUpAndDisappear {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+}
+
+.text-message {
+    position: absolute;
+    font-family: 'Press Start 2P', cursive; /* Example of a pixel art font */
+    font-size: 16px;
+    color: white;
+    animation: moveUpAndDisappear 8s forwards;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Include the pixel art font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');

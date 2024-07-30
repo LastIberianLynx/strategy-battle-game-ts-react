@@ -1,0 +1,24 @@
+we have 3 attacks per turn, and a specific resource gives more attacks per turn. Could be the crown.
+
+Then we have the units, peasants, archer, cavalry, pikeman, swords.
+
+the strongest is the cavalry.
+
+alt1:
+you need food match to get peasants, then you need wood match to get arrows.
+then you could combine 1 peasant and 1 wood and get an archer.
+Cavalry needs 1 peasant, 2 iron, 1 horse.
+
+alt2:
+or we could simply build a ui, that buys the units you need, according to the resources you made.
+But there we need the resources to also escalate, like in tower swap, and have more combinations, that give more resources.
+
+-
+
+As you get units, you get to employ them in battle.
+
+alt1: units are employed only once in battle and then they are gone.
+
+alt2: units are employed in battle and then need to rest for 2 battles.
+
+alt3: only units that are promoted can be used the next battle.
