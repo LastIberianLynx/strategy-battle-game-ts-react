@@ -450,7 +450,6 @@ export default function Chessboard() {
                      }
                     
                 } else {
-                    //game over enemy won, no human units left.
                     addTextMessage("No more moves.", 4, 4, 'red');
                     aiMoves = 0;
                     //skip turn.
