@@ -26,6 +26,7 @@ export const projectileConfigs = {
         name: 'Arrow',
         spriteSheet: 'url("/assets/images/Arrow.png")',
         attack: 10,
+        range: 4,
         bonus: [
             { "Knight": -5 },
             { "Swordsman": +2},
@@ -36,6 +37,7 @@ export const projectileConfigs = {
         name: 'Bolt',
         spriteSheet: 'url("/assets/images/Bolt.png")',
         attack: 16,
+        range: 3,
         bonus: [
             { "Knight": 6 }, //because bonus vs armour
             { "Swordsman": +4}

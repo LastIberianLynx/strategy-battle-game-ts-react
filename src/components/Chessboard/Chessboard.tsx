@@ -122,9 +122,15 @@ export default function Chessboard() {
     let nextMessageId = useRef(0);
 
     const currentTurnRef = useRef(currentTurn);
+    const selectedPieceRef = useRef(selectedPiece);
     useEffect(() => {
         currentTurnRef.current = currentTurn;
     }, [currentTurn]); //this checks the actual state. whereas the other way isnt working.
+
+    useEffect(() => {
+        selectedPieceRef.current = selectedPiece;
+    }, [selectedPiece]); //this checks the actual state. whereas the other way isnt working.
+
 
     useEffect(() => {
         handleProjectiles(); // Start handling projectiles once on mount
@@ -148,6 +154,8 @@ export default function Chessboard() {
         const handleKeyPress = (event: KeyboardEvent) => {
             if (event.code === "Space" && currentTurnRef.current === TeamType.OUR) {
                 handleEndTurn();
+            } else if (event.code === "KeyD" && currentTurnRef.current === TeamType.OUR) {
+                moveRight();
             }
         };
 
@@ -157,6 +165,14 @@ export default function Chessboard() {
             document.removeEventListener("keydown", handleKeyPress);
         };
     }, []);
+
+
+    function moveRight() {
+
+        if(!selectedPiece)
+            return;
+        movePieceTo(selectedPiece.x+1, selectedPiece.y);      
+    }
 
 
     function selectPiece(x: number, y: number) {
@@ -180,7 +196,10 @@ export default function Chessboard() {
     }
 
     function movePieceTo(x: number, y: number) {
+        
         if (selectedPiece && selectedPiece.team === TeamType.OUR && currentTurn === TeamType.OUR) { // Check if it's player's turn and if the selected piece belongs to the player
+            
+            
             // const closestPiece = referee.getClosestEnemy(selectedPiece, pieces);
             // if(closestPiece)
             // addTextMessage("Closest Piece", closestPiece.x, closestPiece.y);
@@ -191,13 +210,18 @@ export default function Chessboard() {
             
             const validMove = referee.isValidMove(selectedPiece.x, selectedPiece.y, x, y, selectedPiece.type, selectedPiece.team, pieces, selectedPiece.unitConfigIndex);
             if (validMove) {
-                setPieces(pieces.map(p =>
-                    p.x === selectedPiece.x && p.y === selectedPiece.y
-                        ? { ...p, x, y, curMoves: selectedPiece.curMoves - 1 }
-                        : p
-                ));
+                   
+                selectedPiece.x = x;
+                selectedPiece.y = y;
+                selectedPiece.curMoves -= 1;
+
+                // setPieces(pieces.map(p =>
+                //     p.x === selectedPiece.x && p.y === selectedPiece.y
+                //         ? { ...p, x, y, curMoves: selectedPiece.curMoves - 1 }
+                //         : p
+                // ));
                 addTextMessage("Moving!", x, 7 - y, "blue");
-                setSelectedPiece(null);
+                // setSelectedPiece(null);
                 handleEndOfMove();
             } else {
                 const bEnemyOccupied = referee.getPieceInTile(x, y, pieces);
@@ -222,7 +246,7 @@ export default function Chessboard() {
                         handleEndOfMove();
                     }
                 }
-                setSelectedPiece(null);
+                // setSelectedPiece(null);
                
             }
         }
@@ -230,25 +254,25 @@ export default function Chessboard() {
 
     function attack(AttackPiece: Piece, DefendPiece: Piece) {
         const projectileAttack = referee.getProjectileConfig(AttackPiece);
-        // if(projectileAttack && projectileAttack?.name != "None")
-        // {
-        //         // Create a new projectile object
-        //         const newProjectile = {
-        //             x: AttackPiece.x,
-        //             y: 7-AttackPiece.y,
-        //             xdest: DefendPiece.x, // Adjust destination as needed
-        //             ydest: 7-DefendPiece.y,
-        //             backgroundImage: projectileAttack.spriteSheet
-        //         };
+        if(projectileAttack && projectileAttack?.name != "None")
+        {
+                // Create a new projectile object
+                const newProjectile = {
+                    x: AttackPiece.x,
+                    y: 7-AttackPiece.y,
+                    xdest: DefendPiece.x, // Adjust destination as needed
+                    ydest: 7-DefendPiece.y,
+                    backgroundImage: projectileAttack.spriteSheet
+                };
         
-        //         // Add the new projectile to the initialProjectiles array
-        //         // initialProjectiles.push(newProjectile);
+                // Add the new projectile to the initialProjectiles array
+                // initialProjectiles.push(newProjectile);
         
-        //         // Update the state with new projectiles
-        //         setProjectiles(prevProjectiles => [...prevProjectiles, newProjectile]);
-        //     addTextMessage("Skrrrt", DefendPiece.x, 7.20 - DefendPiece.y);
-        //     return;
-        // }
+                // Update the state with new projectiles
+                setProjectiles(prevProjectiles => [...prevProjectiles, newProjectile]);
+            addTextMessage("Skrrrt", DefendPiece.x, 7.20 - DefendPiece.y);
+            
+        }
 
         const attackDamage = referee.getAttackResultCombat(AttackPiece.unitConfigIndex, DefendPiece.unitConfigIndex);
         
@@ -290,7 +314,7 @@ export default function Chessboard() {
                     const distance = Math.sqrt(dx * dx + dy * dy);
     
                     // Determine the speed of the projectile
-                    const speed = 0.5; // Adjust the speed as needed
+                    const speed = 0.25; // Adjust the speed as needed
                     if (distance < speed) {
                         // Projectile has reached the destination
                         //here we deliver damage to enemy unit.
@@ -316,7 +340,7 @@ export default function Chessboard() {
     
                 return updatedProjectiles;
             });
-        }, 250); // Adjust the interval time as needed
+        }, 100); // Adjust the interval time as needed
     }
 
     function handleEndOfMove() {
@@ -348,16 +372,25 @@ export default function Chessboard() {
     }
 
     function restoreUnitMoves() {
-        setPieces(pieces.map(piece => {
-            // Fetch the unit configuration for the current piece
-            const unitConfig = referee.getUnitConfig(piece.unitConfigIndex);
+        for(let i = 0; i < pieces.length; ++i) {
+            const unitConfig = referee.getUnitConfig(pieces[i].unitConfigIndex);
+            pieces[i].curMoves = unitConfig.moves;
+        }
+
+        // setPieces(pieces => {
+        //     return pieces.map(...)
+        // });
+
+        // setPieces(pieces.map(piece => {
+        //     // Fetch the unit configuration for the current piece
+        //     const unitConfig = referee.getUnitConfig(piece.unitConfigIndex);
             
-            // Return the updated piece with the moves restored from unitConfig
-            return {
-                ...piece,
-                curMoves: unitConfig.moves
-            };
-        }));
+        //     // Return the updated piece with the moves restored from unitConfig
+        //     return {
+        //         ...piece,
+        //         curMoves: unitConfig.moves
+        //     };
+        // }));
 
     }
     function handleEndTurn() {

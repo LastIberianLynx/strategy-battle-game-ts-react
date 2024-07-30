@@ -148,9 +148,10 @@ export default class Referee {
     isUnitInRange(PieceA: Piece, PieceB: Piece):boolean {
         const dx = Math.abs(PieceA.x - PieceB.x);
         const dy = Math.abs(PieceA.y - PieceB.y);
-        
+       const projConfig = this.getProjectileConfig(PieceA);
+       let range = projConfig?.range ?? 1; 
         // Check if PieceB is exactly one tile away from PieceA
-        return (dx <= 1 && dy <= 1) && (dx + dy > 0); //improve it later for range / arrows.
+        return (dx <= range && dy <= range) && (dx + dy > 0); //improve it later for range / arrows.
     }
 
 
