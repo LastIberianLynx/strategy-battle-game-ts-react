@@ -1,0 +1,14 @@
+/* src/components/StatDisplay/StatDisplay.css */
+.stat-display {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.stat-label {
+    font-weight: bold;
+}
+
+.stat-value {
+    font-weight: normal;
+}

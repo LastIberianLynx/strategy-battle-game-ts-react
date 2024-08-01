@@ -24,7 +24,7 @@ const Projectile: React.FC<Props> = ({ x, y, backgroundImage/*, onContextMenu */
 export const projectileConfigs = {
     'Arrow': { 
         name: 'Arrow',
-        spriteSheet: 'url("/assets/images/Arrow.png")',
+        spriteSheet: 'url("assets/images/Arrow.png")',
         attack: 10,
         range: 4,
         bonus: [
@@ -35,7 +35,7 @@ export const projectileConfigs = {
     },
     'Bolt': { 
         name: 'Bolt',
-        spriteSheet: 'url("/assets/images/Bolt.png")',
+        spriteSheet: 'url("assets/images/Bolt.png")',
         attack: 16,
         range: 3,
         bonus: [

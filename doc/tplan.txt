@@ -1,3 +1,25 @@
+
+we will make the enemy fire shots at us?
+hmmm
+
+make and test onager script.
+
+cbr
+
+-
+
+Now communicate bonuses.
+Get terrain bonuses.
+communicate who's turn.
+fix health to 100%.
+
+then work on candy crush, with the new ideas of react, where you communicate with the render properly.
+
+-
+
+
+-
+
 https://react.dev/learn/queueing-a-series-of-state-updates
 do all these exercises before candy crush game.
 

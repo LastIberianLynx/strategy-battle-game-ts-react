@@ -7,6 +7,7 @@ interface Props {
     number: number;
     onClick: () => void; // Left click to select
     onContextMenu: (e: React.MouseEvent) => void; // Right click to move
+    onKeyDown?: (e: React.KeyboardEvent) => void; 
     pieceHighlight?: boolean;
     health?: number; // Add health prop
     flip?: boolean; // Prop to conditionally apply the flip class
@@ -19,7 +20,7 @@ interface Pos {
     y: number;
 }
 
-const Tile: React.FC<Props> = ({ image, number, onClick, onContextMenu, pieceHighlight, health, flip, isOpponent }) => {
+const Tile: React.FC<Props> = ({ image, number, onClick, onContextMenu,onKeyDown, pieceHighlight, health, flip, isOpponent }) => {
     const tileClass = (number % 2 === 0) ? "tile black-tile" : "tile white-tile";
     const highlightClass = pieceHighlight ? "highlight" : "";
     const pieceClass = `chess-piece ${pieceHighlight ? 'selected' : ''} ${flip ? 'flip' : ''} ${isOpponent ? 'opponent' : ''}`;
@@ -29,6 +30,8 @@ const Tile: React.FC<Props> = ({ image, number, onClick, onContextMenu, pieceHig
             className={`${tileClass} ${highlightClass}`}
             onClick={onClick}
             onContextMenu={onContextMenu}
+            tabIndex={0} // Make the div focusable
+            onKeyDown={onKeyDown} // Key down event
         >
             {image && (
                 <div className={pieceClass} style={{ backgroundImage: `url("${image}")` }}>

@@ -150,30 +150,31 @@ export default function Chessboard() {
         }
     }, [movesLeft]);
 
-    useEffect(() => {
-        const handleKeyPress = (event: KeyboardEvent) => {
-            if (event.code === "Space" && currentTurnRef.current === TeamType.OUR) {
-                handleEndTurn();
-            } else if (event.code === "KeyD" && currentTurnRef.current === TeamType.OUR) {
-                moveRight();
-            }
-        };
 
-        document.addEventListener("keydown", handleKeyPress);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyPress);
-        };
-    }, []);
-
+    function moveSpecific(addX: number, addY: number) {
+            if (!selectedPiece) return;
+            movePieceTo(selectedPiece.x + addX, selectedPiece.y + addY);      
+     }
 
     function moveRight() {
-
-        if(!selectedPiece)
-            return;
-        movePieceTo(selectedPiece.x+1, selectedPiece.y);      
+        if (!selectedPiece) return;
+        movePieceTo(selectedPiece.x + 1, selectedPiece.y);      
     }
 
+    function moveLeft() {
+        if (!selectedPiece) return;
+        movePieceTo(selectedPiece.x - 1, selectedPiece.y);      
+    }
+
+    function moveUp() {
+        if (!selectedPiece) return;
+        movePieceTo(selectedPiece.x, selectedPiece.y + 1);      
+    }
+
+    function moveDown() {
+        if (!selectedPiece) return;
+        movePieceTo(selectedPiece.x, selectedPiece.y - 1);      
+    }
 
     function selectPiece(x: number, y: number) {
         
@@ -242,7 +243,7 @@ export default function Chessboard() {
                     // }
                     if(referee.isUnitInRange(selectedPiece,bEnemyOccupied)) {
                         attack(selectedPiece, bEnemyOccupied);
-                        selectedPiece.curMoves =-1;
+                        // selectedPiece.curMoves =-1;
                         handleEndOfMove();
                     }
                 }
@@ -357,6 +358,7 @@ export default function Chessboard() {
         
     }
 
+
     function addTextMessage(text: string, x: number, y: number, color: string = 'white') {
         const id = nextMessageId.current++;
         setTextMessages((prevMessages) => [
@@ -415,7 +417,7 @@ export default function Chessboard() {
             if (aiMoves > 0) {
                 let opponentPieces = pieces.filter(p => p.team === TeamType.OPPONENT);
                 if(!opponentPieces.length)
-                    addTextMessage("You WON the battle.", 3, 3, 'orange');
+                    addTextMessage("You WON the battle.", 3, 3, 'red');
 
                 opponentPieces = opponentPieces.filter(p => p.curMoves > 0);
                 if (opponentPieces.length > 0) {
@@ -535,6 +537,34 @@ export default function Chessboard() {
         return validMoves;
     }
 
+            
+        function handleTileKeyDown(e: React.KeyboardEvent, x: number, y: number) {
+            e.preventDefault();
+            // movePieceTo(1,0);
+            if (e.code === "Space" && currentTurn === TeamType.OUR) {
+                handleEndTurn();
+            } else if ((e.code === "KeyW" || e.code === "Numpad8") && currentTurn === TeamType.OUR) {
+                moveUp();
+            } else if ((e.code === "KeyA" || e.code === "Numpad4") && currentTurn === TeamType.OUR) {
+                moveLeft();
+            } else if ((e.code === "KeyS" || e.code === "Numpad2") && currentTurn === TeamType.OUR) {
+                moveDown();
+            } else if ((e.code === "KeyD"|| e.code === "Numpad6") && currentTurn === TeamType.OUR) {
+                moveRight();
+            } else if ((e.code === "Numpad9") && currentTurn === TeamType.OUR) {
+                moveSpecific(1, 1);
+            } else if ((e.code === "Numpad3") && currentTurn === TeamType.OUR) {
+                moveSpecific(1, -1);
+            } else if ((e.code === "Numpad7") && currentTurn === TeamType.OUR) {
+                moveSpecific(-1, 1);
+            } else if ((e.code === "Numpad1") && currentTurn === TeamType.OUR) {
+                moveSpecific(-1, -1);
+            }
+
+
+
+        }
+
     let board = [];
 
     for (let j = verticalAxis.length - 1; j >= 0; j--) {
@@ -565,6 +595,7 @@ export default function Chessboard() {
                     number={number}
                     onClick={() => handleTileClick(i, j)}
                     onContextMenu={(e) => handleTileContextMenu(e, i, j)}
+                    onKeyDown={(e) => handleTileKeyDown(e, i, j)} // Pass the key down handler
                     pieceHighlight={selectedPiece ? selectedPiece.x === i && selectedPiece.y === j : false}
                     health={health}
                     flip={flip}

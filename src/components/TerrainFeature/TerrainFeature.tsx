@@ -24,7 +24,7 @@ const TerrainFeature: React.FC<Props> = ({ x, y, backgroundImage, onContextMenu 
 export const terrainConfigs = {
     'Mountain': { 
         name: 'Mountain',
-        spriteSheet: 'url("/assets/images/mountain1.png")',
+        spriteSheet: 'url("assets/images/mountain1.png")',
         CombatBonus: [
             { "Defense": +20 },
         ],
@@ -35,7 +35,7 @@ export const terrainConfigs = {
     },
     'Forest': { 
         name: 'Forest',
-        spriteSheet: 'url("/assets/images/forest1.png")',
+        spriteSheet: 'url("assets/images/forest1.png")',
         CombatBonus: [
             { "Defense": +10 },
         ],
