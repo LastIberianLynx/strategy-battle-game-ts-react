@@ -243,7 +243,7 @@ export default function Chessboard() {
                     // }
                     if(referee.isUnitInRange(selectedPiece,bEnemyOccupied)) {
                         attack(selectedPiece, bEnemyOccupied);
-                        // selectedPiece.curMoves =-1;
+                        selectedPiece.curMoves =-1;
                         handleEndOfMove();
                     }
                 }
